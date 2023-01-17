@@ -1,0 +1,16 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © jasonfink09
+
+//@version=5
+strategy("High volume buy",overlay=true)
+start = timestamp(2018,1,1,0,0)
+end = timestamp(2023,1,1,0,0)
+
+avg = ta.sma(volume, 50)
+
+LongEntry = volume >= 1.5*avg
+LongExit = close < 0.3*open
+
+if time >= start and time < end
+    strategy.entry("Long",strategy.long,1,stop=3,when=LongEntry)
+    strategy.close("Long",when=LongExit)
